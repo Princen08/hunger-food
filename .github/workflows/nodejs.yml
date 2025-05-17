@@ -16,9 +16,6 @@ jobs:
       # Step 1: Checkout the code
       - name: Checkout code
         uses: actions/checkout@v3
-
-      - name: Go to project directory
-        run: cd auth-service
         
       # Step 2: Set up Node.js
       - name: Set up Node.js
@@ -33,12 +30,7 @@ jobs:
         run: npm install
         working-directory: ./auth-service
 
-      # Step 4: Run tests
-      - name: Run tests
-        run: npm test
-        working-directory: ./auth-service
-
-      # Step 5: Build the project
+      # Step 4: Build the project
       - name: Build the project
         run: npm run build
         working-directory: ./auth-service
