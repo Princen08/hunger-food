@@ -6,9 +6,9 @@
     "esModuleInterop": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "outDir": "./dist",
-    "rootDir": "./src"
+    "outDir": "dist",
+    "rootDir": "auth-service",
   },
-  "include": ["src/**/*"],
+  "include": ["auth-service/**/*.ts"],
   "exclude": ["node_modules", "**/*.spec.ts"]
 }
