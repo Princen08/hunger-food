@@ -1,13 +1,18 @@
 # Hungerfood Auth Service
 
-Hungerfood Auth Service is a Node.js-based authentication service for user management, built with Express, MongoDB, and JWT. It provides endpoints for user signup, login, logout, and retrieving the current authenticated user.
+Hungerfood Auth Service is a Node.js-based authentication service for user management, built with Express, MongoDB, and JWT. It provides endpoints for user signup, login, logout, OTP verification, and retrieving the current authenticated user.
 
 ## Features
 
 - User authentication with JWT
 - Password hashing with bcrypt
+- OTP generation and email delivery for user verification
 - API documentation with Swagger
 - MongoDB integration with Mongoose
+- Rate limiting for enhanced security
+- Request ID middleware for better observability
+- Logging with Winston and MongoDB integration
+- Health check endpoint for service monitoring
 
 ## Installation
 
@@ -27,6 +32,9 @@ Hungerfood Auth Service is a Node.js-based authentication service for user manag
    MONGODB_URI=<your-mongodb-uri>
    JWT_SECRET=<your-jwt-secret>
    PORT=<your-port>
+   EMAIL_NAME=<your-email-address>
+   EMAIL_PASS=<your-email-password>
+   OTP_SECRET=<your-otp-secret>
    ```
 
 4. Start the development server:
@@ -38,13 +46,13 @@ Hungerfood Auth Service is a Node.js-based authentication service for user manag
 
 ### Base URL
 ```
-http://localhost:<PORT>/auth
+http://localhost:<PORT>
 ```
 
 ### Endpoints
 
 #### 1. **Signup**
-   - **URL:** `/signup`
+   - **URL:** `/auth/signup`
    - **Method:** `POST`
    - **Description:** Register a new user.
    - **Request Body:**
@@ -60,7 +68,7 @@ http://localhost:<PORT>/auth
      - `409`: User with provided email already exists.
 
 #### 2. **Login**
-   - **URL:** `/login`
+   - **URL:** `/auth/login`
    - **Method:** `POST`
    - **Description:** Login a user.
    - **Request Body:**
@@ -75,7 +83,7 @@ http://localhost:<PORT>/auth
      - `401`: Invalid credentials.
 
 #### 3. **Get Current User**
-   - **URL:** `/current_user`
+   - **URL:** `/auth/current_user`
    - **Method:** `GET`
    - **Description:** Get the currently authenticated user's information.
    - **Responses:**
@@ -83,12 +91,42 @@ http://localhost:<PORT>/auth
      - `401`: No token provided or invalid token.
 
 #### 4. **Logout**
-   - **URL:** `/logout`
+   - **URL:** `/auth/logout`
    - **Method:** `POST`
    - **Description:** Logout the current user.
    - **Responses:**
      - `200`: Logged out successfully.
      - `401`: Not logged in.
+
+#### 5. **Verify OTP**
+   - **URL:** `/auth/verify-otp`
+   - **Method:** `POST`
+   - **Description:** Verify the OTP sent to the user's email.
+   - **Request Body:**
+     ```json
+     {
+       "email": "string",
+       "otp": "string"
+     }
+     ```
+   - **Responses:**
+     - `200`: OTP verified successfully.
+     - `400`: Invalid or expired OTP.
+     - `404`: User not found.
+
+#### 6. **Health Check**
+   - **URL:** `/health`
+   - **Method:** `GET`
+   - **Description:** Check the health of the service.
+   - **Responses:**
+     - `200`: Service is healthy.
+     - Example Response:
+       ```json
+       {
+         "status": "UP",
+         "timestamp": "2023-10-01T12:00:00.000Z"
+       }
+       ```
 
 ## Swagger API Documentation
 
@@ -97,11 +135,19 @@ The API documentation is available at:
 http://localhost:<PORT>/api-docs
 ```
 
+## Logging
+
+The service uses Winston for logging, with logs stored in both the console and MongoDB. Logs include timestamps, log levels, and request IDs for better observability.
+
 ## Scripts
 
 - `npm run start`: Start the application.
 - `npm run build`: Build the TypeScript project.
 - `npm run dev`: Start the application in development mode with hot-reloading.
+
+## Deployment
+
+The service is configured for deployment on Vercel. The `vercel.json` file specifies the build and routing configuration.
 
 ## License
 
