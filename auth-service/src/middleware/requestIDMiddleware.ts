@@ -3,6 +3,7 @@ import { Request, Response, NextFunction } from 'express';
 
 export const requestIdMiddleware = (req: Request, res: Response, next: NextFunction) => {
   const requestId = uuidv4(); // Generate a unique ID
+  console.log(requestId)
   res.setHeader('X-Request-Id', requestId); // Optionally, send it in the response headers
   next();
 };

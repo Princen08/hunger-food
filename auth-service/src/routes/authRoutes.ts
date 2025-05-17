@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { authController } from '../controllers/authController';
 import { rateLimiter } from '../middleware/rateLimiterMiddleware';
-
+import { validateSignup, validateLogin } from '../middleware/userInputValidationMiddleware';
 
 const router = Router();
 
@@ -35,7 +35,7 @@ const router = Router();
  *       409:
  *         description: User with provided email already exists
  */
-router.post('/signup', rateLimiter, authController.signup.bind(authController));
+router.post('/signup', rateLimiter, validateSignup, authController.signup.bind(authController));
 /**
  * @openapi
  * /auth/login:
@@ -60,7 +60,7 @@ router.post('/signup', rateLimiter, authController.signup.bind(authController));
  *       401:
  *         description: Invalid credentials
  */
-router.post('/login', rateLimiter, authController.login.bind(authController));
+router.post('/login', rateLimiter, validateLogin, authController.login.bind(authController));
 /**
  * @openapi
  * /auth/current_user:
