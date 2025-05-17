@@ -8,6 +8,7 @@ import swaggerJsdoc from 'swagger-jsdoc';
 import authRoutes from './routes/authRoutes';
 import logger from './utils/logger';
 import { connectDB } from './utils/db';
+import { requestIdMiddleware } from './middleware/requestIDMiddleware';
 
 // Swagger configuration options
 const swaggerOptions = {
@@ -50,6 +51,9 @@ app.use((req, res, next) => {
   logger.info(`Incoming request: ${req.method} ${req.url}`);
   next();
 });
+
+// Middleware to generate a unique request ID for each request
+app.use(requestIdMiddleware);
 
 // Log unhandled errors
 app.use((err: any, req: any, res: any, next: any) => {
