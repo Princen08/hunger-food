@@ -1,4 +1,5 @@
 import { createLogger, format, transports } from 'winston';
+import 'winston-mongodb';
 
 const logger = createLogger({
   level: 'info',
@@ -8,8 +9,16 @@ const logger = createLogger({
   ),
   transports: [
     new transports.Console(), // Log to the console
-    new transports.File({ filename: 'logs/error.log', level: 'error' }), // Log errors to a file
-    new transports.File({ filename: 'logs/combined.log' }) // Log all messages to a file
+    new transports.MongoDB({
+      level: 'info', // Log level to store in MongoDB
+      db: process.env.MONGODB_URI || 'mongodb://localhost:27017/logs', // MongoDB connection URI
+      options: { useUnifiedTopology: true }, // MongoDB connection options
+      collection: 'auth_service_logs', // Collection name for logs
+      format: format.combine(
+        format.timestamp(),
+        format.json() // Store logs in JSON format
+      ),
+    }),
   ],
 });
 
