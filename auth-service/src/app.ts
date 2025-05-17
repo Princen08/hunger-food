@@ -7,6 +7,8 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 
 import authRoutes from './routes/authRoutes';
+import logger from './utils/logger';
+import { connectDB } from './utils/db';
 
 // Swagger configuration options
 const swaggerOptions = {
@@ -44,14 +46,24 @@ app.use((req, res, next) => {
   next();
 });
 
+// Log incoming requests
+app.use((req, res, next) => {
+  logger.info(`Incoming request: ${req.method} ${req.url}`);
+  next();
+});
+
+// Log unhandled errors
+app.use((err: any, req: any, res: any, next: any) => {
+  logger.error(`Unhandled error: ${err.message}`);
+  res.status(500).send('Internal Server Error');
+});
+
 // Connect to MongoDB using Mongoose
-mongoose.connect(process.env.MONGODB_URI as string)
-  .then(() => console.log('MongoDB connected')) // Log success message
-  .catch(err => console.error('MongoDB connection error:', err)); // Log error message
+connectDB()
 
 // Start the Express server
 app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
+  logger.info(`Server is running on http://localhost:${PORT}`);
 });
 
 // Swagger setup for API documentation
