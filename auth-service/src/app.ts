@@ -6,7 +6,7 @@ import mongoose from 'mongoose';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 
-import authRoutes from '../routes/authRoutes';
+import authRoutes from './routes/authRoutes';
 
 // Swagger configuration options
 const swaggerOptions = {
