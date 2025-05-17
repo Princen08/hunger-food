@@ -23,7 +23,9 @@ jobs:
         with:
           node-version: 20
           cache: 'npm'
-
+      - name: Go to project directory
+        run: cd auth-service
+        
       # Step 3: Install dependencies
       - name: Install dependencies
         run: npm install
