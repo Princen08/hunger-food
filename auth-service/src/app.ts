@@ -6,6 +6,7 @@ import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 
 import authRoutes from './routes/authRoutes';
+import healthRoutes from './routes/healthRoutes';
 import logger from './utils/logger';
 import { connectDB } from './utils/db';
 import { requestIdMiddleware } from './middleware/requestIDMiddleware';
@@ -35,6 +36,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Middleware to parse cookies
 app.use(cookiesParser());
+
+// Register health check route
+app.use('/', healthRoutes);
 
 // Route for authentication-related endpoints
 app.use('/auth', authRoutes);
