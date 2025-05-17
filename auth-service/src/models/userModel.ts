@@ -8,6 +8,7 @@ interface IUser extends Document {
     username: string;
     password: string;
     email: string;
+    isVerified: boolean;
     comparePassword: (password: string) => Promise<boolean>;
 }
 
@@ -17,7 +18,8 @@ interface IUser extends Document {
 const userSchema = new mongoose.Schema({
     username: { type: String, required: true, unique: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }
+    password: { type: String, required: true },
+    isVerified: { type: Boolean, default: false },
 });
 
 /**

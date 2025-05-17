@@ -95,4 +95,39 @@ router.get('/current_user', rateLimiter, authController.getCurrentUser.bind(auth
  */
 router.post('/logout', rateLimiter, authController.logout.bind(authController));
 
+/**
+ * @openapi
+ * /auth/verify-otp:
+ *   post:
+ *     summary: Verify the OTP sent to the user's email
+ *     tags:
+ *       - Auth
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *               - otp
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 description: The email address of the user
+ *               otp:
+ *                 type: string
+ *                 description: The OTP sent to the user's email
+ *     responses:
+ *       200:
+ *         description: OTP verified successfully
+ *       400:
+ *         description: Invalid or expired OTP
+ *       404:
+ *         description: User not found
+ *       500:
+ *         description: Internal server error
+ */
+router.post('/verify-otp', rateLimiter, authController.verifyOTP.bind(authController));
+
 export default router;

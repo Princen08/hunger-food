@@ -1,6 +1,11 @@
 import { createLogger, format, transports } from 'winston';
 import 'winston-mongodb';
 
+import dotenv from 'dotenv';
+
+// Load environment variables
+dotenv.config();
+
 const logger = createLogger({
   level: 'info',
   format: format.combine(
@@ -15,7 +20,7 @@ const logger = createLogger({
     new transports.Console(), // Log to the console
     new transports.MongoDB({
       level: 'info', // Log level to store in MongoDB
-      db: process.env.MONGODB_URI || 'mongodb://localhost:27017/logs', // MongoDB connection URI
+      db: process.env.MONGODB_URI || 'mongodb://0.0.0.0:27017/logs', // MongoDB connection URI
       collection: 'auth_service_logs', // Collection name for logs
       format: format.combine(
         format.timestamp(),
