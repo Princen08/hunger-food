@@ -12,7 +12,6 @@ const logger = createLogger({
     new transports.MongoDB({
       level: 'info', // Log level to store in MongoDB
       db: process.env.MONGODB_URI || 'mongodb://localhost:27017/logs', // MongoDB connection URI
-      options: { useUnifiedTopology: true }, // MongoDB connection options
       collection: 'auth_service_logs', // Collection name for logs
       format: format.combine(
         format.timestamp(),
