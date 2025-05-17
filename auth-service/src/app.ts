@@ -2,7 +2,6 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import cookiesParser from 'cookie-parser';
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
 import swaggerUi from 'swagger-ui-express';
 import swaggerJsdoc from 'swagger-jsdoc';
 
@@ -57,6 +56,9 @@ app.use((err: any, req: any, res: any, next: any) => {
   logger.error(`Unhandled error: ${err.message}`);
   res.status(500).send('Internal Server Error');
 });
+
+// Enable trust proxy to correctly interpret the X-Forwarded-For header
+app.set('trust proxy', 1); // Use '1' if your app is behind one proxy (e.g., a load balancer)
 
 // Connect to MongoDB using Mongoose
 connectDB()
