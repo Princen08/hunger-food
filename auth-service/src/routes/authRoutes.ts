@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { authController } from '../controllers/authController';
+import { rateLimiter } from '../middleware/rateLimiterMiddleware';
+
 
 const router = Router();
 
@@ -33,7 +35,7 @@ const router = Router();
  *       409:
  *         description: User with provided email already exists
  */
-router.post('/signup', authController.signup.bind(authController));
+router.post('/signup', rateLimiter, authController.signup.bind(authController));
 /**
  * @openapi
  * /auth/login:
@@ -58,7 +60,7 @@ router.post('/signup', authController.signup.bind(authController));
  *       401:
  *         description: Invalid credentials
  */
-router.post('/login', authController.login.bind(authController));
+router.post('/login', rateLimiter, authController.login.bind(authController));
 /**
  * @openapi
  * /auth/current_user:
@@ -79,7 +81,7 @@ router.post('/login', authController.login.bind(authController));
  *       401:
  *         description: No token provided or invalid token
  */
-router.get('/current_user', authController.getCurrentUser.bind(authController));
+router.get('/current_user', rateLimiter, authController.getCurrentUser.bind(authController));
 /**
  * @openapi
  * /auth/logout:
@@ -91,6 +93,6 @@ router.get('/current_user', authController.getCurrentUser.bind(authController));
  *       200:
  *         description: Logged out successfully
  */
-router.post('/logout', authController.logout.bind(authController));
+router.post('/logout', rateLimiter, authController.logout.bind(authController));
 
 export default router;
