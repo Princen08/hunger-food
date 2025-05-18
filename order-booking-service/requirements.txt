@@ -1,7 +1,7 @@
 fastapi
 dnspython
 uvicorn
-sqlalchemy[[asyncio]
+sqlalchemy[asyncio]
 asyncpg
 pydantic
 psycopg2-binary
