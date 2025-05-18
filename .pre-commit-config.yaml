@@ -4,7 +4,7 @@ repos:
     rev: v0.0.287  # Use the latest version of Ruff
     hooks:
       - id: ruff
-        args: ["--fix"]  # Automatically fix issues
+        args: [format]
         files: ^app/  # Run Ruff only on files in the `app/` directory
 
   # Black: Code Formatter

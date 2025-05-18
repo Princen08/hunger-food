@@ -36,7 +36,7 @@ class MongoDBHandler(logging.Handler):
             print("MongoDB connection is not available. Skipping log entry.")
             return
         try:
-            log_entry = self.format(record)
+            self.format(record)
             log_data = {
                 "level": record.levelname,
                 "message": record.getMessage(),

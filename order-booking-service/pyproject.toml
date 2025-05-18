@@ -37,6 +37,8 @@ packages = ["app"]
 
 [tool.ruff]
 line-length = 88
+
+[tool.ruff.lint]
 select = ["E", "F", "W", "C90"]  # Enable specific rule categories
 ignore = ["E501"]  # Ignore specific rules (e.g., line length)
 exclude = [
