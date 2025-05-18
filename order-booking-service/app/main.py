@@ -1,6 +1,7 @@
 from fastapi import FastAPI
-from app.database import engine
+
 from app.base import Base
+from app.database import engine
 from app.models import Order  # noqa: F401
 from app.routers import orders
 

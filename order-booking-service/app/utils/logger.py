@@ -1,8 +1,9 @@
 import logging
-from pymongo import MongoClient, errors
-from datetime import datetime
 import os
+from datetime import datetime
+
 from dotenv import load_dotenv
+from pymongo import MongoClient, errors
 
 load_dotenv()
 
