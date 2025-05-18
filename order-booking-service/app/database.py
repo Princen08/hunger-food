@@ -1,6 +1,8 @@
 import os
+
 from dotenv import load_dotenv
-from supabase import create_client, Client
+from supabase import Client, create_client
+
 from app.utils.logger import logger  # Import your logger
 
 load_dotenv()
