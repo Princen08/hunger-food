@@ -1,21 +1,21 @@
 import os
-
 from dotenv import load_dotenv
-from sqlalchemy.ext.asyncio import AsyncSession, create_async_engine
-from sqlalchemy.orm import sessionmaker
+from supabase import create_client, Client
+from app.utils.logger import logger  # Import your logger
 
 load_dotenv()
 
-DATABASE_URL = os.getenv("DATABASE_URL")  # Ensure this uses "postgresql+asyncpg"
+SUPABASE_URI = os.getenv("SUPABASE_URI")
+SUPABASE_PROJECT_KEY = os.getenv("SUPABASE_PROJECT_KEY")
 
-# Create an async engine
-engine = create_async_engine(DATABASE_URL, echo=True)
+if not SUPABASE_URI or not SUPABASE_URI:
+    logger.error("Supabase URL or Key is missing in environment variables")
+    raise ValueError("Supabase URL and Key must be set in the environment variables")
 
-# Create an async session factory
-async_session = sessionmaker(bind=engine, class_=AsyncSession, expire_on_commit=False)
-
-
-# Dependency to get the database session
-async def get_db():
-    async with async_session() as session:
-        yield session
+try:
+    # Initialize Supabase client
+    supabase: Client = create_client(SUPABASE_URI, SUPABASE_PROJECT_KEY)
+    logger.info("Successfully connected to Supabase")
+except Exception as e:
+    logger.error(f"Failed to initialize Supabase client: {e}")
+    raise RuntimeError("Could not connect to Supabase") from e

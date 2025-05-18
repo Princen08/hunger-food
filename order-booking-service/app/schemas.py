@@ -26,7 +26,7 @@ class OrderResponse(OrderBase):
 
     id: int
     user_id: str  # Include user_id in the response
-    order_date: datetime
+    created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True

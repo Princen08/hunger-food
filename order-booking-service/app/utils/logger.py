@@ -12,6 +12,18 @@ MONGO_URI = os.getenv("MONGODB_URI", "mongodb://localhost:27017")
 DB_NAME = os.getenv("LOG_DB_NAME", "hungerfood")
 COLLECTION_NAME = os.getenv("LOG_COLLECTION_NAME", "order_service_logs")
 
+# Logger setup
+logger = logging.getLogger("order_service_logger")
+logger.setLevel(logging.INFO)
+
+# Console handler
+console_handler = logging.StreamHandler()
+console_handler.setFormatter(
+    logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+)
+logger.addHandler(console_handler)
+
+
 # MongoDB client setup with error handling
 try:
     client = MongoClient(
@@ -21,12 +33,12 @@ try:
     collection = db[COLLECTION_NAME]
     # Test the connection
     client.admin.command("ping")
-    print("Connected to MongoDB successfully!")
+    logger.info("Connected to MongoDB successfully!")
 except errors.ServerSelectionTimeoutError as e:
-    print(f"Failed to connect to MongoDB: {e}")
+    logger.error(f"Failed to connect to MongoDB: {e}")
     client = None  # Set client to None if connection fails
 except Exception as e:
-    print(f"An unexpected error occurred while connecting to MongoDB: {e}")
+    logger.error(f"An unexpected error occurred while connecting to MongoDB: {e}")
     client = None
 
 
@@ -51,17 +63,6 @@ class MongoDBHandler(logging.Handler):
             # Handle logging errors gracefully
             print(f"Failed to log to MongoDB: {e}")
 
-
-# Logger setup
-logger = logging.getLogger("order_service_logger")
-logger.setLevel(logging.INFO)
-
-# Console handler
-console_handler = logging.StreamHandler()
-console_handler.setFormatter(
-    logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
-)
-logger.addHandler(console_handler)
 
 # MongoDB handler
 if client is not None:
