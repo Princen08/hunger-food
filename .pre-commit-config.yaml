@@ -1,0 +1,41 @@
+repos:
+  # Ruff: Linter
+  - repo: https://github.com/charliermarsh/ruff-pre-commit
+    rev: v0.0.287  # Use the latest version of Ruff
+    hooks:
+      - id: ruff
+        args: ["--fix"]  # Automatically fix issues
+        files: ^app/  # Run Ruff only on files in the `app/` directory
+
+  # Black: Code Formatter
+  - repo: https://github.com/psf/black
+    rev: 23.9.1  # Use the latest version of Black
+    hooks:
+      - id: black
+        files: ^app/  # Run Black only on files in the `app/` directory
+
+  # isort: Import Sorter
+  - repo: https://github.com/PyCQA/isort
+    rev: 5.12.0  # Use the latest version of isort
+    hooks:
+      - id: isort
+        files: ^app/  # Run isort only on files in the `app/` directory
+
+  # Check for large files
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: check-added-large-files
+
+  # Check for trailing whitespace
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: trailing-whitespace
+
+  # Check for end-of-file newline
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v4.4.0
+    hooks:
+      - id: end-of-file-fixer
+        files: ^app/  # Run isort only on files in the `app/` directory

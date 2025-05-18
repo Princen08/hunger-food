@@ -1,0 +1,10 @@
+fastapi
+dnspython
+uvicorn
+sqlalchemy
+asyncpg
+pydantic
+psycopg2
+python-dotenv
+pymongo
+python-jose
