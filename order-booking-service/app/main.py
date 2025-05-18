@@ -1,7 +1,5 @@
 from fastapi import FastAPI
-from app.database import supabase
 from app.routers import orders
-from app.utils.logger import logger  # Import your logger
 
 app = FastAPI()
 
