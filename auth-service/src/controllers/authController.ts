@@ -108,7 +108,7 @@ class AuthController {
             const decoded = jwt.verify(token, process.env.JWT_SECRET || 'secret') as { id: string };
             const user = await User.findById(decoded.id);
             if (user) {
-                res.json({ username: user.username });
+                res.json({ id: user._id, username: user.username});
             } else {
                 res.status(404).json({ message: 'User not found' });
             }
