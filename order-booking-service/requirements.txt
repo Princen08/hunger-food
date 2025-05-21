@@ -1,8 +1,11 @@
-fastapi
+fastapi==0.104.1
 dnspython
-uvicorn
+uvicorn==0.24.0.post1
 pydantic
-python-dotenv
+python-dotenv==1.0.0
 pymongo
 python-jose
-supabase
+supabase==1.0.3
+pytest
+pytest-asyncio
+httpx
