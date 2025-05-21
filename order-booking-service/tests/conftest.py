@@ -30,8 +30,9 @@ patch_crud_logger.start()
 patch_routers_orders_logger.start()
 
 # 3. NOW import the FastAPI app
-from app.main import \
-    app  # noqa: E402 # app.database will be initialized here using the mocked create_client
+from app.main import (
+    app,
+)  # noqa: E402 # app.database will be initialized here using the mocked create_client
 
 
 @pytest_asyncio.fixture(scope="function")

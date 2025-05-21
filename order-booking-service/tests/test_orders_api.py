@@ -51,7 +51,9 @@ async def test_create_new_order_success(client):
 @pytest.mark.asyncio
 async def test_create_new_order_failure_creation_returns_none(client):
     # Keep this test as it was, patching app.crud.create_order
-    with patch("app.crud.create_order", return_value=None) as mock_crud_create:  # noqa: F841
+    with patch(
+        "app.crud.create_order", return_value=None
+    ) as mock_crud_create:  # noqa: F841
         response = await client.post(
             "/orders/", json={"item_name": "Test Item", "quantity": 1, "price": 10.0}
         )
